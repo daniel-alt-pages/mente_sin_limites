@@ -17,13 +17,13 @@ const Hero = ({ openModal }) => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-brand-blue/20 bg-brand-blue/5 backdrop-blur-md mb-8"
+                className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 backdrop-blur-md mb-8"
             >
                 <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
                 </span>
-                <span className="text-brand-blue text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em]">Admisiones 2025 Abiertas</span>
+                <span className="text-brand-gold text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em]">EVENTO 100% GRATUITO</span>
             </motion.div>
 
             {/* Logo Profile */}
@@ -56,6 +56,25 @@ const Hero = ({ openModal }) => {
                     </svg>
                 </span>
             </motion.h1>
+
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="mb-8 flex flex-col items-center gap-2"
+            >
+                <p className="text-gray-400 text-sm sm:text-base uppercase tracking-widest font-bold">
+                    Organizado por <span className="text-white">SeamosGenios</span> y el grupo de estudio gratuito
+                </p>
+                <a
+                    href="https://whatsapp.com/channel/0029Vb0XtNA0rGiOZmEutE2x"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-brand-blue hover:text-white transition-colors font-bold border-b border-brand-blue/30 hover:border-brand-blue pb-0.5"
+                >
+                    <i className="fa-brands fa-whatsapp"></i> Mente Sin Límites
+                </a>
+            </motion.div>
 
             <motion.p
                 initial={{ opacity: 0 }}
