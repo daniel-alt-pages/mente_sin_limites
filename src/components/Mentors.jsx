@@ -16,7 +16,7 @@ const Mentors = () => {
                     <div className="absolute inset-0 bg-brand-blue/20 blur-[100px] rounded-full"></div>
                     <div className="relative z-10 glass-panel rounded-3xl p-2 border border-white/10 rotate-3 hover:rotate-0 transition-transform duration-500">
                         <img
-                            src="/images/mentores.png"
+                            src="https://images.prismic.io/seamosgenios2026/aSskZXNYClf9nmV9_IMG-20251129-WA0074.jpg?auto=format,compress"
                             alt="Mentores de Élite"
                             className="w-full h-auto rounded-2xl grayscale hover:grayscale-0 transition-all duration-500"
                         />
