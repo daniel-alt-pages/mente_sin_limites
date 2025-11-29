@@ -4,21 +4,21 @@ import { motion } from 'framer-motion';
 const Benefits = () => {
     const cards = [
         {
-            icon: "fa-brain",
-            title: "Neuroeducación",
-            desc: "Técnicas científicas para potenciar tu memoria y aprendizaje acelerado.",
+            icon: "fa-file-pen",
+            title: "Entrenamiento Real",
+            desc: "Material actualizado de la última prueba y mini-simulacro en vivo para medir tu nivel.",
             color: "text-brand-blue"
         },
         {
-            icon: "fa-robot",
-            title: "Simulacros IA",
-            desc: "Entrenamiento adaptativo que identifica y fortalece tus áreas de mejora.",
+            icon: "fa-gift",
+            title: "Ruleta de Premios",
+            desc: "Participa por becas y recursos exclusivos durante la transmisión en vivo.",
             color: "text-brand-gold"
         },
         {
-            icon: "fa-chart-line",
-            title: "Analytics",
-            desc: "Seguimiento detallado de tu progreso con métricas de rendimiento en tiempo real.",
+            icon: "fa-users",
+            title: "Comunidad VIP",
+            desc: "Acceso directo a clases gratuitas todos los días y resolución de dudas.",
             color: "text-purple-400"
         }
     ];

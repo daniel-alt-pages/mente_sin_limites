@@ -39,6 +39,7 @@ const Mentors = () => {
                                     <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>Egresado del Colombo Americano</span></li>
                                     <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>Postulado Beca Nutresa Icesi</span></li>
                                     <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>3 años de experiencia Saber 11°</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>Promedio académico de 4.80</span></li>
                                 </ul>
                             </div>
 
