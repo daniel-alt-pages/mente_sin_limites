@@ -108,7 +108,7 @@ const Hero = ({ openModal }) => {
                 </button>
             </motion.div>
 
-            {/* Stats Bar */}
+            {/* Event Details Bar */}
             <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -117,20 +117,20 @@ const Hero = ({ openModal }) => {
                 className="mt-16 sm:mt-24 w-full max-w-5xl glass-panel rounded-2xl p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10"
             >
                 <div className="text-center md:text-left">
-                    <h4 className="text-3xl sm:text-4xl font-black text-white mb-1">+500</h4>
-                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Estudiantes</p>
+                    <h4 className="text-2xl sm:text-3xl font-black text-white mb-1">29 NOV</h4>
+                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">6:00 PM - 9:00 PM</p>
                 </div>
                 <div className="text-center md:text-left md:border-l border-white/5 md:pl-8">
-                    <h4 className="text-3xl sm:text-4xl font-black text-brand-gold mb-1">400+</h4>
-                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Puntaje Promedio</p>
+                    <h4 className="text-2xl sm:text-3xl font-black text-brand-gold mb-1">3 HORAS</h4>
+                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Clases en Vivo</p>
                 </div>
                 <div className="text-center md:text-left md:border-l border-white/5 md:pl-8">
-                    <h4 className="text-3xl sm:text-4xl font-black text-brand-blue mb-1">98%</h4>
-                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Ingreso a U. Pública</p>
+                    <h4 className="text-2xl sm:text-3xl font-black text-brand-blue mb-1">MATERIAL</h4>
+                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Última Prueba 2025</p>
                 </div>
                 <div className="text-center md:text-left md:border-l border-white/5 md:pl-8">
-                    <h4 className="text-3xl sm:text-4xl font-black text-white mb-1">24/7</h4>
-                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Soporte Académico</p>
+                    <h4 className="text-2xl sm:text-3xl font-black text-white mb-1">PREMIOS</h4>
+                    <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Ruleta & Simulacro</p>
                 </div>
             </motion.div>
         </section>

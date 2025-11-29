@@ -21,24 +21,46 @@ const Mentors = () => {
                             className="w-full h-auto rounded-2xl grayscale hover:grayscale-0 transition-all duration-500"
                         />
 
-                        <div className="absolute bottom-0 left-0 w-full p-6 sm:p-12 flex flex-col md:flex-row justify-between items-end gap-6 z-20">
-                            {/* Mentor 1 */}
-                            <div className="flex items-center gap-5 backdrop-blur-md bg-black/60 p-4 rounded-2xl border border-white/10 w-full md:w-auto hover:border-brand-blue/50 transition-colors">
-                                <div className="w-1.5 h-12 sm:h-16 bg-brand-blue shadow-[0_0_20px_#00F0FF]"></div>
-                                <div>
-                                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1">DAVID CARDONA</h3>
-                                    <p className="text-brand-blue font-bold tracking-wider text-sm sm:text-base">PUNTAJE: 477/500</p>
+                        <div className="absolute bottom-0 left-0 w-full p-4 sm:p-8 flex flex-col gap-4 z-20 bg-gradient-to-t from-black via-black/90 to-transparent pt-20">
+
+                            {/* Mentor 1: David Cardona */}
+                            <div className="backdrop-blur-md bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-brand-blue/50 transition-colors group/card">
+                                <div className="flex items-center gap-4 mb-3">
+                                    <div className="w-1.5 h-12 bg-brand-blue shadow-[0_0_20px_#00F0FF]"></div>
+                                    <div>
+                                        <h3 className="text-xl sm:text-2xl font-black text-white leading-none mb-1">DAVID CARDONA</h3>
+                                        <p className="text-brand-blue font-bold tracking-wider text-sm">PUNTAJE: 477/500</p>
+                                    </div>
                                 </div>
+                                <ul className="text-gray-300 text-xs sm:text-sm space-y-1.5 pl-2">
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>477 en primer intento</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>100/100 en Sociales (2 veces)</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>Certificado en IA con Helppeople</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>Egresado del Colombo Americano</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>Postulado Beca Nutresa Icesi</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-1"></i> <span>3 años de experiencia Saber 11°</span></li>
+                                </ul>
                             </div>
 
-                            {/* Mentor 2 */}
-                            <div className="flex items-center gap-5 backdrop-blur-md bg-black/60 p-4 rounded-2xl border border-white/10 w-full md:w-auto text-right md:text-left md:flex-row-reverse hover:border-brand-gold/50 transition-colors">
-                                <div className="w-1.5 h-12 sm:h-16 bg-brand-gold shadow-[0_0_20px_#FFD600]"></div>
-                                <div>
-                                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1">SEBASTIÁN M.</h3>
-                                    <p className="text-brand-gold font-bold tracking-wider text-sm sm:text-base">PUNTAJE: 433/500</p>
+                            {/* Mentor 2: Sebastián Martínez */}
+                            <div className="backdrop-blur-md bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-brand-gold/50 transition-colors group/card">
+                                <div className="flex items-center gap-4 mb-3">
+                                    <div className="w-1.5 h-12 bg-brand-gold shadow-[0_0_20px_#FFD600]"></div>
+                                    <div>
+                                        <h3 className="text-xl sm:text-2xl font-black text-white leading-none mb-1">SEBASTIÁN MARTÍNEZ</h3>
+                                        <p className="text-brand-gold font-bold tracking-wider text-sm">PUNTAJE: 433/500</p>
+                                    </div>
                                 </div>
+                                <ul className="text-gray-300 text-xs sm:text-sm space-y-1.5 pl-2">
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-1"></i> <span>Mejor ICFES 2025 Jamundí</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-1"></i> <span>100/100 en Sociales e Inglés</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-1"></i> <span>Certificado en IA Helppeople</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-1"></i> <span>Promedio académico 4.80</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-1"></i> <span>Nivel B2 en Inglés</span></li>
+                                    <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-1"></i> <span>2do Lugar Olimpiadas del Saber</span></li>
+                                </ul>
                             </div>
+
                         </div>
                     </div>
                 </motion.div>
