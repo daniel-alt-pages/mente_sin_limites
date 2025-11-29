@@ -164,72 +164,42 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                         <option value="Graduado/Bachiller" className="bg-gray-900">Ya me gradué</option>
                                     </select>
                                     <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
-                                        <i className="fa-solid fa-chevron-down text-xs"></i>
+                                        <div className="relative flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                name="marketing_consent"
+                                                id="marketing_consent"
+                                                className="custom-checkbox"
+                                                defaultChecked
+                                            />
+                                        </div>
+                                        <label htmlFor="marketing_consent" className="text-xs text-gray-400 cursor-pointer select-none leading-relaxed">
+                                            Quiero recibir tips de estudio, invitaciones a clases gratuitas y novedades de <span className="text-brand-blue font-bold">SeamosGenios</span> en mi correo.
+                                        </label>
                                     </div>
-                                </div>
-                            </div>
-                            <div>
-                                <label className="block text-xs font-bold text-gray-500 uppercase mb-2 ml-1">Departamento</label>
-                                <div className="relative">
-                                    <select
-                                        name="department"
-                                        required
-                                        aria-label="Departamento"
-                                        className="w-full px-5 py-4 rounded-xl glass-input text-sm appearance-none cursor-pointer"
+
+                                    {/* Hidden Fields */}
+                                    <input type="hidden" name="utm_source" defaultValue={new URLSearchParams(window.location.search).get('utm_source') || 'Directo'} />
+                                    <input type="hidden" name="utm_medium" defaultValue={new URLSearchParams(window.location.search).get('utm_medium') || ''} />
+                                    <input type="hidden" name="utm_campaign" defaultValue={new URLSearchParams(window.location.search).get('utm_campaign') || ''} />
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full py-5 bg-brand-gold text-black font-black text-lg rounded-xl hover:shadow-[0_0_30px_rgba(255,214,0,0.4)] transition-all transform hover:-translate-y-1 mt-4 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
                                     >
-                                        <option value="" className="bg-gray-900">Selecciona...</option>
-                                        <option value="Antioquia" className="bg-gray-900">Antioquia</option>
-                                        <option value="Atlántico" className="bg-gray-900">Atlántico</option>
-                                        <option value="Bogotá D.C." className="bg-gray-900">Bogotá D.C.</option>
-                                        <option value="Cundinamarca" className="bg-gray-900">Cundinamarca</option>
-                                        <option value="Valle del Cauca" className="bg-gray-900">Valle del Cauca</option>
-                                        <option value="Otro" className="bg-gray-900">Otro</option>
-                                    </select>
-                                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
-                                        <i className="fa-solid fa-chevron-down text-xs"></i>
-                                    </div>
-                                </div>
+                                        <span className="relative z-10">{isSubmitting ? 'PROCESANDO...' : 'CONFIRMAR REGISTRO'}</span>
+                                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                    </button>
+
+                                    <p className="text-center text-[10px] text-gray-600 mt-6">
+                                        🔒 Tus datos están cifrados y seguros.
+                                    </p>
+                                </form>
                             </div>
                         </div>
-
-                        {/* Marketing Consent */}
-                        <div className="flex items-start gap-3 mt-2 p-1">
-                            <div className="relative flex items-center">
-                                <input
-                                    type="checkbox"
-                                    name="marketing_consent"
-                                    id="marketing_consent"
-                                    className="custom-checkbox"
-                                    defaultChecked
-                                />
-                            </div>
-                            <label htmlFor="marketing_consent" className="text-xs text-gray-400 cursor-pointer select-none leading-relaxed">
-                                Quiero recibir tips de estudio, invitaciones a clases gratuitas y novedades de <span className="text-brand-blue font-bold">SeamosGenios</span> en mi correo.
-                            </label>
-                        </div>
-
-                        {/* Hidden Fields */}
-                        <input type="hidden" name="utm_source" defaultValue={new URLSearchParams(window.location.search).get('utm_source') || 'Directo'} />
-                        <input type="hidden" name="utm_medium" defaultValue={new URLSearchParams(window.location.search).get('utm_medium') || ''} />
-                        <input type="hidden" name="utm_campaign" defaultValue={new URLSearchParams(window.location.search).get('utm_campaign') || ''} />
-
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="w-full py-5 bg-brand-gold text-black font-black text-lg rounded-xl hover:shadow-[0_0_30px_rgba(255,214,0,0.4)] transition-all transform hover:-translate-y-1 mt-4 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
-                        >
-                            <span className="relative z-10">{isSubmitting ? 'PROCESANDO...' : 'CONFIRMAR REGISTRO'}</span>
-                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        </button>
-
-                        <p className="text-center text-[10px] text-gray-600 mt-6">
-                            🔒 Tus datos están cifrados y seguros.
-                        </p>
-                    </form>
                 </div>
-            </div>
-        </div>
-    );
+                );
 };
 
-export default RegistrationModal;
+                export default RegistrationModal;
