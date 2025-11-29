@@ -20,9 +20,25 @@ const Mentors = () => {
                             alt="Mentores de Élite"
                             className="w-full h-auto rounded-2xl grayscale hover:grayscale-0 transition-all duration-500"
                         />
-                        <div className="absolute bottom-6 left-6 right-6 glass-panel p-4 rounded-xl border border-white/10">
-                            <p className="text-white font-bold text-lg">Equipo de Expertos</p>
-                            <p className="text-brand-blue text-sm">Ingenieros, Médicos y Psicólogos</p>
+
+                        <div className="absolute bottom-0 left-0 w-full p-6 sm:p-12 flex flex-col md:flex-row justify-between items-end gap-6 z-20">
+                            {/* Mentor 1 */}
+                            <div className="flex items-center gap-5 backdrop-blur-md bg-black/60 p-4 rounded-2xl border border-white/10 w-full md:w-auto hover:border-brand-blue/50 transition-colors">
+                                <div className="w-1.5 h-12 sm:h-16 bg-brand-blue shadow-[0_0_20px_#00F0FF]"></div>
+                                <div>
+                                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1">DAVID CARDONA</h3>
+                                    <p className="text-brand-blue font-bold tracking-wider text-sm sm:text-base">PUNTAJE: 477/500</p>
+                                </div>
+                            </div>
+
+                            {/* Mentor 2 */}
+                            <div className="flex items-center gap-5 backdrop-blur-md bg-black/60 p-4 rounded-2xl border border-white/10 w-full md:w-auto text-right md:text-left md:flex-row-reverse hover:border-brand-gold/50 transition-colors">
+                                <div className="w-1.5 h-12 sm:h-16 bg-brand-gold shadow-[0_0_20px_#FFD600]"></div>
+                                <div>
+                                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-none mb-1">SEBASTIÁN M.</h3>
+                                    <p className="text-brand-gold font-bold tracking-wider text-sm sm:text-base">PUNTAJE: 433/500</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
