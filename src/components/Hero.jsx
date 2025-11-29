@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Hero = ({ openModal }) => {
     const scrollToBenefits = () => {
@@ -9,28 +10,44 @@ const Hero = ({ openModal }) => {
     };
 
     return (
-        <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative py-12 sm:py-20">
+        <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative py-12 sm:py-20 overflow-hidden">
+
             {/* Badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-brand-blue/20 bg-brand-blue/5 backdrop-blur-md mb-8 animate-float">
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-brand-blue/20 bg-brand-blue/5 backdrop-blur-md mb-8"
+            >
                 <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
                 </span>
                 <span className="text-brand-blue text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em]">Admisiones 2025 Abiertas</span>
-            </div>
+            </motion.div>
 
             {/* Logo Profile */}
-            <div className="mb-8 relative group animate-float" style={{ animationDelay: '1s' }}>
-                <div className="absolute inset-0 bg-brand-blue/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+            <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                className="mb-8 relative group"
+            >
+                <div className="absolute inset-0 bg-brand-blue/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse-slow"></div>
                 <img
                     src="/images/mente_sin_limites.svg"
                     alt="Mente Sin Límites Logo"
                     className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full bg-black/20 backdrop-blur-sm p-1 object-contain group-hover:scale-105 transition-transform duration-500"
                 />
-            </div>
+            </motion.div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] mb-6 sm:mb-8 max-w-5xl">
+            <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] mb-6 sm:mb-8 max-w-5xl"
+            >
                 MARATÓN <br />
                 <span className="text-gradient-blue relative inline-block">
                     ACADÉMICA
@@ -38,15 +55,25 @@ const Hero = ({ openModal }) => {
                         <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
                     </svg>
                 </span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed mb-10 px-2">
+            <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="text-base sm:text-lg md:text-xl text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed mb-10 px-2"
+            >
                 La preparación definitiva para el ICFES Saber 11°.
                 <span className="text-white block sm:inline"> Estrategia neuroeducativa, simulacros reales y resultados garantizados.</span>
-            </p>
+            </motion.p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-4">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-4"
+            >
                 <button
                     onClick={openModal}
                     className="relative w-full sm:w-auto px-8 py-4 bg-brand-gold text-black font-black text-lg rounded-xl hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,214,0,0.3)] hover:shadow-[0_0_60px_rgba(255,214,0,0.5)]"
@@ -60,10 +87,16 @@ const Hero = ({ openModal }) => {
                 >
                     CONOCER MÁS
                 </button>
-            </div>
+            </motion.div>
 
             {/* Stats Bar */}
-            <div className="mt-16 sm:mt-24 w-full max-w-5xl glass-panel rounded-2xl p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10">
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="mt-16 sm:mt-24 w-full max-w-5xl glass-panel rounded-2xl p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10"
+            >
                 <div className="text-center md:text-left">
                     <h4 className="text-3xl sm:text-4xl font-black text-white mb-1">+500</h4>
                     <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Estudiantes</p>
@@ -80,7 +113,7 @@ const Hero = ({ openModal }) => {
                     <h4 className="text-3xl sm:text-4xl font-black text-white mb-1">24/7</h4>
                     <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Soporte Académico</p>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };

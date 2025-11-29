@@ -50,6 +50,9 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    filter: blur(3px);
+    transform: scale(1.02);
+    /* Prevent white edges from blur */
   }
 
   /* Glassmorphism Premium */

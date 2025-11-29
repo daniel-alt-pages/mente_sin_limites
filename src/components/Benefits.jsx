@@ -13,45 +13,76 @@ const Benefits = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                    {/* Card 1 */}
-                    <div className="glass-panel p-8 sm:p-10 rounded-3xl hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden h-full flex flex-col hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] hover:border-brand-blue/30">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 rounded-bl-full -mr-10 -mt-10 transition-all group-hover:scale-150"></div>
-                        <div className="w-14 h-14 bg-brand-blue/20 rounded-2xl flex items-center justify-center text-brand-blue text-2xl mb-8 border border-brand-blue/20 group-hover:scale-110 transition-transform">
-                            <i className="fa-solid fa-brain"></i>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-4">Neuroeducación</h3>
-                        <p className="text-gray-400 leading-relaxed text-sm flex-grow">
-                            Entrenamos tu cerebro para la resistencia y velocidad. Aprende a gestionar la fatiga cognitiva durante el examen.
-                        </p>
-                    </div>
+                    import React from 'react';
+                    import {motion} from 'framer-motion';
 
-                    {/* Card 2 */}
-                    <div className="glass-panel p-8 sm:p-10 rounded-3xl hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden h-full flex flex-col border-brand-gold/20 hover:shadow-[0_0_30px_rgba(255,214,0,0.15)] hover:border-brand-gold/40">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/10 rounded-bl-full -mr-10 -mt-10 transition-all group-hover:scale-150"></div>
-                        <div className="w-14 h-14 bg-brand-gold/20 rounded-2xl flex items-center justify-center text-brand-gold text-2xl mb-8 border border-brand-gold/20 group-hover:scale-110 transition-transform">
-                            <i className="fa-solid fa-trophy"></i>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-4">Simulacros IA</h3>
-                        <p className="text-gray-400 leading-relaxed text-sm flex-grow">
-                            Preguntas tipo ICFES analizadas con Inteligencia Artificial para predecir tus puntos débiles antes del examen real.
-                        </p>
-                    </div>
+const Benefits = () => {
+  const cards = [
+                    {
+                        icon: "fa-brain",
+                    title: "Neuroeducación",
+                    desc: "Técnicas científicas para potenciar tu memoria y aprendizaje acelerado.",
+                    color: "text-brand-blue"
+    },
+                    {
+                        icon: "fa-robot",
+                    title: "Simulacros IA",
+                    desc: "Entrenamiento adaptativo que identifica y fortalece tus áreas de mejora.",
+                    color: "text-brand-gold"
+    },
+                    {
+                        icon: "fa-chart-line",
+                    title: "Analytics",
+                    desc: "Seguimiento detallado de tu progreso con métricas de rendimiento en tiempo real.",
+                    color: "text-purple-400"
+    }
+                    ];
 
-                    {/* Card 3 */}
-                    <div className="glass-panel p-8 sm:p-10 rounded-3xl hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden h-full flex flex-col hover:shadow-[0_0_30px_rgba(157,0,255,0.15)] hover:border-brand-purple/30">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/10 rounded-bl-full -mr-10 -mt-10 transition-all group-hover:scale-150"></div>
-                        <div className="w-14 h-14 bg-brand-purple/20 rounded-2xl flex items-center justify-center text-brand-purple text-2xl mb-8 border border-brand-purple/20 group-hover:scale-110 transition-transform">
-                            <i className="fa-solid fa-chart-line"></i>
+                    return (
+                    <section id="benefits" className="py-20 sm:py-32 relative">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8 }}
+                                className="text-center mb-16 sm:mb-24"
+                            >
+                                <h2 className="text-3xl sm:text-5xl font-black text-white mb-6">
+                                    TECNOLOGÍA <span className="text-brand-blue">EDUCATIVA</span>
+                                </h2>
+                                <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+                                    Fusionamos pedagogía avanzada con herramientas digitales de última generación.
+                                </p>
+                            </motion.div>
+
+                            <div className="grid md:grid-cols-3 gap-8">
+                                {cards.map((card, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.6, delay: index * 0.2 }}
+                                        whileHover={{ y: -10 }}
+                                        className="glass-panel p-8 rounded-3xl border border-white/5 hover:border-brand-blue/30 transition-all group relative overflow-hidden"
+                                    >
+                                        <div className={`absolute top-0 right-0 p-32 bg-${card.color.replace('text-', '')}/5 blur-[80px] rounded-full pointer-events-none group-hover:bg-${card.color.replace('text-', '')}/10 transition-all duration-500`}></div>
+
+                                        <div className={`w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 border border-white/10`}>
+                                            <i className={`fa-solid ${card.icon} text-3xl ${card.color}`}></i>
+                                        </div>
+
+                                        <h3 className="text-2xl font-bold text-white mb-4">{card.title}</h3>
+                                        <p className="text-gray-400 leading-relaxed text-sm">
+                                            {card.desc}
+                                        </p>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-4">Analytics</h3>
-                        <p className="text-gray-400 leading-relaxed text-sm flex-grow">
-                            Dashboard personalizado con tu progreso. Visualiza tu mejora en Matemáticas, Lectura y Ciencias en tiempo real.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+                    </section>
+                    );
 };
 
-export default Benefits;
+                    export default Benefits;
