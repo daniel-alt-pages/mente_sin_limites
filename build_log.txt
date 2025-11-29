@@ -1,0 +1,31 @@
+
+> app@0.0.0 build
+> vite build
+
+[36mvite v7.2.4 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 20 modules transformed.
+Ô£ù Build failed in 1.46s
+error during build:
+[vite:esbuild] Transform failed with 1 error:
+C:/Users/Daniel/Downloads/publicidad/app/src/components/Benefits.jsx:20:2: ERROR: Unexpected "const"
+file: C:/Users/Daniel/Downloads/publicidad/app/src/components/Benefits.jsx:20:2
+
+Unexpected "const"
+18 |  
+19 |  const Benefits = () => {
+20 |    const cards = [
+   |    ^
+21 |                      {
+22 |                          icon: "fa-brain",
+
+    at failureErrorWithLog (C:\Users\Daniel\Downloads\publicidad\app\node_modules\esbuild\lib\main.js:1467:15)
+    at C:\Users\Daniel\Downloads\publicidad\app\node_modules\esbuild\lib\main.js:736:50
+    at responseCallbacks.<computed> (C:\Users\Daniel\Downloads\publicidad\app\node_modules\esbuild\lib\main.js:603:9)
+    at handleIncomingPacket (C:\Users\Daniel\Downloads\publicidad\app\node_modules\esbuild\lib\main.js:658:12)
+    at Socket.readFromStdout (C:\Users\Daniel\Downloads\publicidad\app\node_modules\esbuild\lib\main.js:581:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
