@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#050505] text-white antialiased overflow-x-hidden;
+  }
+}
+
+@layer components {
+  /* FONDO TECNOLÓGICO */
+  .tech-bg {
+    background-image: url('/images/2.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  /* Glassmorphism Premium */
+  .glass-panel {
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  .glass-input:focus {
+    border-color: #00F0FF;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Checkbox Personalizado */
+  .custom-checkbox {
+    appearance: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.25rem;
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .custom-checkbox::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #00F0FF;
+    transform-origin: center;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+
+  .custom-checkbox:checked::before {
+    transform: scale(1);
+  }
+
+  .custom-checkbox:checked {
+    border-color: #00F0FF;
+  }
+
+  /* Text Gradients */
+  .text-gradient-gold {
+    background: linear-gradient(to right, #FFD700, #FFF8DC);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(to right, #00F0FF, #0080FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00F0FF;
+}
