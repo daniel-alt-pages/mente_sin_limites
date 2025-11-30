@@ -4,40 +4,46 @@ import { motion } from 'framer-motion';
 const Benefits = () => {
     const cards = [
         {
-            icon: "fa-file-pen",
+            icons: ["fa-file-pen", "fa-clock", "fa-check-double"],
             title: "Entrenamiento Real",
             desc: "Material actualizado de la última prueba y mini-simulacro en vivo para medir tu nivel.",
-            color: "text-brand-blue"
+            color: "text-brand-blue",
+            borderColor: "group-hover:border-brand-blue/50",
+            bgHover: "group-hover:bg-brand-blue/5"
         },
         {
-            icon: "fa-gift",
+            icons: ["fa-gift", "fa-trophy", "fa-star"],
             title: "Ruleta de Premios",
-            desc: "Participa por becas y recursos exclusivos durante la transmisión en vivo.",
-            color: "text-brand-gold"
+            desc: "Participa por becas, asesorías personalizadas y material de estudio exclusivo.",
+            color: "text-brand-gold",
+            borderColor: "group-hover:border-brand-gold/50",
+            bgHover: "group-hover:bg-brand-gold/5"
         },
         {
-            icon: "fa-users",
+            icons: ["fa-users", "fa-comments", "fa-video"],
             title: "Comunidad VIP",
-            desc: "Acceso directo a clases gratuitas todos los días y resolución de dudas.",
-            color: "text-purple-400"
+            desc: "Acceso a grupo privado de WhatsApp con estudiantes de alto rendimiento.",
+            color: "text-brand-purple",
+            borderColor: "group-hover:border-brand-purple/50",
+            bgHover: "group-hover:bg-brand-purple/5"
         }
     ];
 
     return (
-        <section id="benefits" className="py-20 sm:py-32 relative">
+        <section className="py-20 relative z-10">
             <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-16 sm:mb-24"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-3xl sm:text-5xl font-black text-white mb-6">
-                        TECNOLOGÍA <span className="text-brand-blue">EDUCATIVA</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 uppercase tracking-tight">
+                        Tecnología <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-600">Educativa</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                        Fusionamos pedagogía avanzada con herramientas digitales de última generación.
+                    <p className="text-gray-400 max-w-2xl mx-auto">
+                        Hemos diseñado una experiencia de aprendizaje inmersiva que combina la mejor tecnología con la metodología más efectiva.
                     </p>
                 </motion.div>
 
@@ -45,21 +51,22 @@ const Benefits = () => {
                     {cards.map((card, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.2 }}
-                            whileHover={{ y: -10 }}
-                            className="glass-panel p-8 rounded-3xl border border-white/5 hover:border-brand-blue/30 transition-all group relative overflow-hidden"
+                            transition={{ duration: 0.5, delay: index * 0.2 }}
+                            className={`glass-panel p-8 rounded-3xl border border-white/10 transition-all duration-300 hover:-translate-y-2 group ${card.borderColor} ${card.bgHover}`}
                         >
-                            <div className={`absolute top-0 right-0 p-32 bg-${card.color.replace('text-', '')}/5 blur-[80px] rounded-full pointer-events-none group-hover:bg-${card.color.replace('text-', '')}/10 transition-all duration-500`}></div>
-
-                            <div className={`w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 border border-white/10`}>
-                                <i className={`fa-solid ${card.icon} text-3xl ${card.color}`}></i>
+                            <div className="flex justify-center gap-4 mb-6">
+                                {card.icons.map((icon, i) => (
+                                    <div key={i} className={`w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-2xl ${card.color} group-hover:scale-110 transition-transform duration-300 delay-${i * 100}`}>
+                                        <i className={`fa-solid ${icon}`}></i>
+                                    </div>
+                                ))}
                             </div>
 
-                            <h3 className="text-2xl font-bold text-white mb-4">{card.title}</h3>
-                            <p className="text-gray-400 leading-relaxed text-sm">
+                            <h3 className="text-xl font-bold text-white mb-3 text-center group-hover:text-white transition-colors">{card.title}</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed text-center group-hover:text-gray-300 transition-colors">
                                 {card.desc}
                             </p>
                         </motion.div>

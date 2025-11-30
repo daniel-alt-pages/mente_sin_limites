@@ -37,18 +37,7 @@ function App() {
   };
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      // Check for CTRL + S + G
-      if (e.ctrlKey && (e.key === 's' || e.key === 'S') && (e.code === 'KeyS' || e.code === 'KeyG')) {
-        // This logic is tricky because 'g' needs to be pressed while Ctrl+S is held, or just Ctrl+S+G sequence?
-        // Browsers usually handle Ctrl+S as save. 
-        // Let's implement a simpler check: e.ctrlKey && e.key === 'g' might be easier but user asked for Ctrl+S+G.
-        // Standard interpretation: Ctrl + S + G usually means holding Ctrl, then S, then G? Or holding Ctrl, S and G together?
-        // Most likely Ctrl + G while S is held is impossible to detect cleanly without a state machine.
-        // Let's assume the user means a custom combo. 
-        // Let's try to detect if all three are pressed.
-      }
-    };
+
 
     // Better approach for "CTRL + S + G":
     // It's a non-standard shortcut. 
@@ -101,6 +90,11 @@ function App() {
       </main>
 
       <Footer />
+
+      {/* Fixed Bottom Banner */}
+      <div className="fixed bottom-0 left-0 w-full z-50 bg-brand-gold/90 backdrop-blur-md text-black text-[10px] sm:text-xs font-black text-center py-2 tracking-widest uppercase shadow-[0_-5px_20px_rgba(255,214,0,0.3)] animate-pulse-slow">
+        🔥 Maratón Académica 100% Gratuita - Cupos Limitados
+      </div>
 
       <RegistrationModal isOpen={isModalOpen} onClose={closeModal} />
     </div>

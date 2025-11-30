@@ -101,7 +101,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
 
                             <div className="text-center mb-10">
                                 <h2 className="text-3xl font-black text-white uppercase mb-3 tracking-tight">Inscripción Oficial</h2>
-                                <p className="text-gray-400 text-sm">Reserva tu cupo y recibe acceso inmediato a la plataforma.</p>
+                                <p className="text-gray-400 text-sm">Reserva tu cupo GRATIS y recibe acceso inmediato a la plataforma.</p>
                             </div>
 
                             <form id="registrationForm" className="space-y-5" onSubmit={handleSubmit}>
@@ -240,7 +240,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                     disabled={isSubmitting}
                                     className="w-full py-5 bg-brand-gold text-black font-black text-lg rounded-xl hover:shadow-[0_0_30px_rgba(255,214,0,0.4)] transition-all transform hover:-translate-y-1 mt-4 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
-                                    <span className="relative z-10">{isSubmitting ? 'PROCESANDO...' : 'CONFIRMAR REGISTRO'}</span>
+                                    <span className="relative z-10">{isSubmitting ? 'PROCESANDO...' : 'CONFIRMAR REGISTRO GRATIS'}</span>
                                     <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                                 </button>
 
