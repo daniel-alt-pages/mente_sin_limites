@@ -118,19 +118,6 @@ const RegistrationModal = ({ isOpen, onClose }) => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-
-        const form = e.target;
-        const formData = new FormData(form);
-
-        // Construct final data
-        const finalEmail = emailMode === 'split' ? `${emailUser}${emailDomain}` : emailUser;
-        const finalDept = deptMode === 'select' ? selectedDept : customDept;
-        const finalPhone = `${selectedCountry.code} ${phoneNumber}`;
-
-        // Update FormData with processed values
-        formData.set('email', finalEmail);
         formData.set('department', finalDept);
         formData.set('phone', finalPhone);
         formData.append('timestamp', new Date().toISOString());
