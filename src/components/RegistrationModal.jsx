@@ -1,70 +1,42 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyk-vZybr60khZ_NnLPnbScPm2KxcgPcNWNxhMirdSn81GSNEYErZIsDrK_FtZv4j-gvw/exec';
+import Swal from 'sweetalert2';
 
 const COUNTRIES = [
-    { name: "Colombia", code: "+57", iso: "co" },
-    { name: "México", code: "+52", iso: "mx" },
-    { name: "Estados Unidos", code: "+1", iso: "us" },
-    { name: "Perú", code: "+51", iso: "pe" },
-    { name: "Argentina", code: "+54", iso: "ar" },
-    { name: "Chile", code: "+56", iso: "cl" },
-    { name: "Ecuador", code: "+593", iso: "ec" },
-    { name: "Venezuela", code: "+58", iso: "ve" },
-    { name: "España", code: "+34", iso: "es" },
-    { name: "Bolivia", code: "+591", iso: "bo" },
-    { name: "Costa Rica", code: "+506", iso: "cr" },
-    { name: "Rep. Dominicana", code: "+1", iso: "do" },
-    { name: "Guatemala", code: "+502", iso: "gt" },
-    { name: "Honduras", code: "+504", iso: "hn" },
-    { name: "Nicaragua", code: "+505", iso: "ni" },
-    { name: "Panamá", code: "+507", iso: "pa" },
-    { name: "Paraguay", code: "+595", iso: "py" },
-    { name: "El Salvador", code: "+503", iso: "sv" },
-    { name: "Uruguay", code: "+598", iso: "uy" },
+    { name: 'Colombia', code: '+57', iso: 'co' },
+    { name: 'México', code: '+52', iso: 'mx' },
+    { name: 'Perú', code: '+51', iso: 'pe' },
+    { name: 'Argentina', code: '+54', iso: 'ar' },
+    { name: 'Chile', code: '+56', iso: 'cl' },
+    { name: 'Ecuador', code: '+593', iso: 'ec' },
+    { name: 'Venezuela', code: '+58', iso: 've' },
+    { name: 'Bolivia', code: '+591', iso: 'bo' },
+    { name: 'Costa Rica', code: '+506', iso: 'cr' },
+    { name: 'Rep. Dominicana', code: '+1', iso: 'do' },
+    { name: 'España', code: '+34', iso: 'es' },
+    { name: 'Estados Unidos', code: '+1', iso: 'us' },
+    { name: 'Otro', code: '+', iso: 'un' } // 'un' for United Nations / Universal
 ];
 
 const EMAIL_PROVIDERS = [
-    {
-        domain: '@gmail.com',
-        logo: (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-8 h-8">
-                <path fill="#4caf50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"></path>
-                <path fill="#1e88e5" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"></path>
-                <polygon fill="#e53935" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"></polygon>
-                <path fill="#c62828" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"></path>
-                <path fill="#fbc02d" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0 C43.076,8,45,9.924,45,12.298z"></path>
-            </svg>
-        )
-    },
-    {
-        domain: '@hotmail.com',
-        logo: <i className="fa-brands fa-microsoft text-[#00a4ef] text-2xl"></i>
-    },
-    {
-        domain: '@outlook.com',
-        logo: <i className="fa-brands fa-microsoft text-[#0078d4] text-2xl"></i>
-    },
-    {
-        domain: '@yahoo.com',
-        logo: <i className="fa-brands fa-yahoo text-[#6001d2] text-2xl"></i>
-    },
-    {
-        domain: '@icloud.com',
-        logo: <i className="fa-brands fa-apple text-white text-2xl"></i>
-    },
+    { domain: '@gmail.com', logo: <i className="fa-brands fa-google text-red-500"></i> },
+    { domain: '@hotmail.com', logo: <i className="fa-brands fa-microsoft text-blue-500"></i> },
+    { domain: '@outlook.com', logo: <i className="fa-brands fa-microsoft text-blue-400"></i> },
+    { domain: '@yahoo.com', logo: <i className="fa-brands fa-yahoo text-purple-500"></i> },
+    { domain: '@icloud.com', logo: <i className="fa-brands fa-apple text-white"></i> }
 ];
 
 const RegistrationModal = ({ isOpen, onClose }) => {
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyk-vZybr60khZ_NnLPnbScPm2KxcgPcNWNxhMirdSn81GSNEYErZIsDrK_FtZv4j-gvw/exec';
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Email State
-    const [emailMode, setEmailMode] = useState('split');
+    const [emailMode, setEmailMode] = useState('split'); // 'split' | 'full'
     const [emailUser, setEmailUser] = useState('');
     const [emailDomain, setEmailDomain] = useState('@gmail.com');
     const [isEmailDomainOpen, setIsEmailDomainOpen] = useState(false);
+    const [hasShownEmailWarning, setHasShownEmailWarning] = useState(false);
 
     // Department State
     const [deptMode, setDeptMode] = useState('select');
@@ -115,6 +87,21 @@ const RegistrationModal = ({ isOpen, onClose }) => {
         const existing = JSON.parse(localStorage.getItem('maraton_registros') || '[]');
         existing.push(data);
         localStorage.setItem('maraton_registros', JSON.stringify(existing));
+    };
+
+    const handleEmailFocus = () => {
+        if (!hasShownEmailWarning) {
+            setHasShownEmailWarning(true);
+            Swal.fire({
+                title: '¡IMPORTANTE!',
+                text: 'Asegúrate de escribir tu correo correctamente. Ahí recibirás el acceso a la clase.',
+                icon: 'info',
+                background: '#0A0A0A',
+                color: '#fff',
+                confirmButtonColor: '#00F0FF',
+                confirmButtonText: 'ENTENDIDO'
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -280,6 +267,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                                 <input
                                                     type="text"
                                                     value={emailUser}
+                                                    onFocus={handleEmailFocus}
                                                     onChange={(e) => {
                                                         const val = e.target.value;
                                                         if (val.includes('@')) {
@@ -357,6 +345,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                                 <input
                                                     type="email"
                                                     value={emailUser}
+                                                    onFocus={handleEmailFocus}
                                                     onChange={(e) => setEmailUser(e.target.value)}
                                                     required
                                                     autoFocus
