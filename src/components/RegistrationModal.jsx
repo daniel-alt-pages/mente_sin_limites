@@ -157,7 +157,15 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                 const result = await response.json();
                 console.log('Respuesta Sheets:', result);
 
-                if (result.result === 'error' && result.message === 'duplicate_email') {
+                // --- DEBUG TEMPORAL: Mostrar respuesta cruda ---
+                // Swal.fire({
+                //     title: 'DEBUG',
+                //     text: JSON.stringify(result),
+                //     icon: 'info'
+                // });
+                // -----------------------------------------------
+
+                if (result.result === 'error' && (result.message === 'duplicate_email' || result.message.includes('duplicate'))) {
                     Swal.fire({
                         title: '¡YA ESTÁS REGISTRADO!',
                         text: 'Este usuario ya se encuentra en nuestra base de datos. ¡Nos vemos en clase!',
@@ -197,7 +205,11 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                         });
                     }, 1000);
                 } else {
-                    throw new Error('Respuesta desconocida del servidor');
+                    // Si no es error de duplicado ni éxito, lanzamos error genérico
+                    if (result.result === 'error') {
+                        throw new Error(result.message || 'Error desconocido del servidor');
+                    }
+                    throw new Error('Respuesta desconocida del servidor: ' + JSON.stringify(result));
                 }
 
             } catch (error) {
