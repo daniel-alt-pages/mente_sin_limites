@@ -39,16 +39,6 @@ function App() {
   useEffect(() => {
 
 
-    // Better approach for "CTRL + S + G":
-    // It's a non-standard shortcut. 
-    // Let's implement: If Ctrl is held, and 's' is pressed, set a flag? 
-    // Actually, let's just listen for the specific event. 
-    // If the user presses G while Ctrl and S are held?
-    // Browser 'Save' (Ctrl+S) might intercept.
-
-    // Let's try a simpler interpretation or a sequence. 
-    // But to strictly follow "CTRL + S + G", we can try to check active keys.
-
     const keys = new Set();
 
     const down = (e) => {
@@ -93,7 +83,7 @@ function App() {
 
       {/* Fixed Bottom Banner */}
       <div className="fixed bottom-0 left-0 w-full z-50 bg-brand-gold/90 backdrop-blur-md text-black text-[10px] sm:text-xs font-black text-center py-2 tracking-widest uppercase shadow-[0_-5px_20px_rgba(255,214,0,0.3)] animate-pulse-slow">
-        🔥 Maratón Académica 100% Gratuita - Cupos Limitados
+        Maratón de clases pa'l ICFES  
       </div>
 
       <RegistrationModal isOpen={isModalOpen} onClose={closeModal} />
