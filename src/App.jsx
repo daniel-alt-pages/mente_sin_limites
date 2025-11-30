@@ -83,7 +83,7 @@ function App() {
 
       {/* Fixed Bottom Banner */}
       <div className="fixed bottom-0 left-0 w-full z-50 bg-brand-gold/90 backdrop-blur-md text-black text-[10px] sm:text-xs font-black text-center py-2 tracking-widest uppercase shadow-[0_-5px_20px_rgba(255,214,0,0.3)] animate-pulse-slow">
-        Maratón de clases pa'l ICFES  
+        🔥 Maratón de clases 100% Gratuitas - Cupos Limitados  
       </div>
 
       <RegistrationModal isOpen={isModalOpen} onClose={closeModal} />
