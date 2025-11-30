@@ -2,17 +2,19 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const Hero = ({ openModal }) => {
+    
+    // Función para desplazarse suavemente a la sección de mentores
     const scrollToMentors = () => {
         const mentorsSection = document.getElementById('mentors');
         if (mentorsSection) {
             mentorsSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.warn("La sección con id 'mentors' no se encontró en el documento.");
         }
     };
 
     return (
         <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative py-8 sm:py-20 overflow-hidden">
-
-
 
             {/* Logo Profile */}
             <motion.div
@@ -45,6 +47,7 @@ const Hero = ({ openModal }) => {
                 </span>
             </motion.h1>
 
+            {/* Subtítulo / Organizadores (CORREGIDO) */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -52,7 +55,7 @@ const Hero = ({ openModal }) => {
                 className="mb-4 sm:mb-8 flex flex-col items-center gap-2"
             >
                 <p className="text-gray-400 text-sm sm:text-base uppercase tracking-widest font-bold">
-                    Organizado por <span className="text-white">SeamosGenios</span> y su grupo de estudio</span>
+                    Organizado por <span className="text-white">SeamosGenios</span> y su grupo de estudio
                 </p>
                 <a
                     href="https://whatsapp.com/channel/0029Vb0XtNA0rGiOZmEutE2x"
@@ -64,6 +67,7 @@ const Hero = ({ openModal }) => {
                 </a>
             </motion.div>
 
+            {/* Descripción */}
             <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
