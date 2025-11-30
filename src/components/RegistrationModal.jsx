@@ -148,13 +148,28 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                     params.append(key, value);
                 }
 
-                await fetch(GOOGLE_SCRIPT_URL, {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: params.toString()
                 });
-                console.log('Enviado a Sheets');
+
+                const result = await response.json();
+                console.log('Respuesta Sheets:', result);
+
+                if (result.result === 'error' && result.message === 'duplicate_email') {
+                    Swal.fire({
+                        title: '¡YA ESTÁS REGISTRADO!',
+                        text: 'Este usuario ya se encuentra en nuestra base de datos. ¡Nos vemos en clase!',
+                        icon: 'warning',
+                        background: '#0A0A0A',
+                        color: '#fff',
+                        confirmButtonColor: '#FFD600',
+                        confirmButtonText: 'ENTENDIDO'
+                    });
+                    setIsSubmitting(false);
+                    return;
+                }
             } catch (error) {
                 console.error('Error enviando a Sheets:', error);
             }
