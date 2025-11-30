@@ -118,6 +118,21 @@ const RegistrationModal = ({ isOpen, onClose }) => {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Construct final data
+        const rawEmail = emailMode === 'split' ? `${emailUser}${emailDomain}` : emailUser;
+        // Clean email to remove spaces
+        const finalEmail = rawEmail.replace(/\s/g, '');
+
+        const finalDept = deptMode === 'select' ? selectedDept : customDept;
+        const finalPhone = `${selectedCountry.code} ${phoneNumber}`;
+
+        formData.set('email', finalEmail);
         formData.set('department', finalDept);
         formData.set('phone', finalPhone);
         formData.append('timestamp', new Date().toISOString());
@@ -143,14 +158,6 @@ const RegistrationModal = ({ isOpen, onClose }) => {
 
                 const result = await response.json();
                 console.log('Respuesta Sheets:', result);
-
-                // --- DEBUG TEMPORAL: Mostrar respuesta cruda ---
-                // Swal.fire({
-                //     title: 'DEBUG',
-                //     text: JSON.stringify(result),
-                //     icon: 'info'
-                // });
-                // -----------------------------------------------
 
                 if (result.result === 'error' && (result.message === 'duplicate_email' || result.message.includes('duplicate'))) {
                     Swal.fire({
