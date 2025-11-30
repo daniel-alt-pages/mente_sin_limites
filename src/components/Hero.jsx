@@ -2,15 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const Hero = ({ openModal }) => {
-    const scrollToBenefits = () => {
-        const benefitsSection = document.getElementById('benefits');
-        if (benefitsSection) {
-            benefitsSection.scrollIntoView({ behavior: 'smooth' });
+    const scrollToMentors = () => {
+        const mentorsSection = document.getElementById('mentors');
+        if (mentorsSection) {
+            mentorsSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
 
     return (
-        <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative py-12 sm:py-20 overflow-hidden">
+        <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 relative py-8 sm:py-20 overflow-hidden">
 
 
 
@@ -19,13 +19,13 @@ const Hero = ({ openModal }) => {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                className="mb-8 relative group"
+                className="mb-4 sm:mb-8 relative group"
             >
                 <div className="absolute inset-0 bg-brand-blue/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse-slow"></div>
                 <img
                     src="/images/mente_sin_limites.svg"
                     alt="Mente Sin Límites Logo"
-                    className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full bg-black/20 backdrop-blur-sm p-1 object-contain group-hover:scale-105 transition-transform duration-500"
+                    className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full bg-black/20 backdrop-blur-sm p-1 object-contain group-hover:scale-105 transition-transform duration-500"
                 />
             </motion.div>
 
@@ -34,7 +34,7 @@ const Hero = ({ openModal }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] mb-6 sm:mb-8 max-w-5xl"
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] mb-4 sm:mb-8 max-w-5xl"
             >
                 MARATÓN <br />
                 <span className="text-gradient-blue relative inline-block">
@@ -49,7 +49,7 @@ const Hero = ({ openModal }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="mb-8 flex flex-col items-center gap-2"
+                className="mb-4 sm:mb-8 flex flex-col items-center gap-2"
             >
                 <p className="text-gray-400 text-sm sm:text-base uppercase tracking-widest font-bold">
                     Organizado por <span className="text-white">SeamosGenios</span> y su grupo de estudio <span className="text-white">Mente Sin Límites</span>
@@ -68,7 +68,7 @@ const Hero = ({ openModal }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="text-base sm:text-lg md:text-xl text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed mb-10 px-2"
+                className="text-base sm:text-lg md:text-xl text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-10 px-2"
             >
                 La preparación definitiva para el ICFES Saber 11°.
                 <span className="text-white block sm:inline"> Estrategia neuroeducativa, simulacros reales y resultados garantizados.</span>
@@ -89,7 +89,7 @@ const Hero = ({ openModal }) => {
                     <div className="absolute inset-0 rounded-xl ring-2 ring-white/20 ring-offset-2 ring-offset-black"></div>
                 </button>
                 <button
-                    onClick={scrollToBenefits}
+                    onClick={scrollToMentors}
                     className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 text-white font-bold text-lg rounded-xl hover:bg-white/10 transition-all backdrop-blur-sm"
                 >
                     CONOCER MÁS
@@ -101,7 +101,7 @@ const Hero = ({ openModal }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
-                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/10 backdrop-blur-md mt-8"
+                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/10 backdrop-blur-md mt-6 sm:mt-8"
             >
                 <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>

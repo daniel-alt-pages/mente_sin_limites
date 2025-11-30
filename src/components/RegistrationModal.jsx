@@ -1,19 +1,115 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqZBX8qEm42reUEjvl77pJQCfY4TO-YOhla6sHcAreCJ4IdFIfKJaEmFm-S1g8ORVcfA/exec';
 
+const COUNTRIES = [
+    { name: "Colombia", code: "+57", iso: "co" },
+    { name: "México", code: "+52", iso: "mx" },
+    { name: "Estados Unidos", code: "+1", iso: "us" },
+    { name: "Perú", code: "+51", iso: "pe" },
+    { name: "Argentina", code: "+54", iso: "ar" },
+    { name: "Chile", code: "+56", iso: "cl" },
+    { name: "Ecuador", code: "+593", iso: "ec" },
+    { name: "Venezuela", code: "+58", iso: "ve" },
+    { name: "España", code: "+34", iso: "es" },
+    { name: "Bolivia", code: "+591", iso: "bo" },
+    { name: "Costa Rica", code: "+506", iso: "cr" },
+    { name: "Rep. Dominicana", code: "+1", iso: "do" },
+    { name: "Guatemala", code: "+502", iso: "gt" },
+    { name: "Honduras", code: "+504", iso: "hn" },
+    { name: "Nicaragua", code: "+505", iso: "ni" },
+    { name: "Panamá", code: "+507", iso: "pa" },
+    { name: "Paraguay", code: "+595", iso: "py" },
+    { name: "El Salvador", code: "+503", iso: "sv" },
+    { name: "Uruguay", code: "+598", iso: "uy" },
+];
+
+const EMAIL_PROVIDERS = [
+    { 
+        domain: '@gmail.com', 
+        logo: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-8 h-8">
+                <path fill="#4caf50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"></path>
+                <path fill="#1e88e5" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"></path>
+                <polygon fill="#e53935" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"></polygon>
+                <path fill="#c62828" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"></path>
+                <path fill="#fbc02d" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0 C43.076,8,45,9.924,45,12.298z"></path>
+            </svg>
+        )
+    },
+    { 
+        domain: '@hotmail.com', 
+        logo: <i className="fa-brands fa-microsoft text-[#00a4ef] text-2xl"></i> 
+    },
+    { 
+        domain: '@outlook.com', 
+        logo: <i className="fa-brands fa-microsoft text-[#0078d4] text-2xl"></i> 
+    },
+    { 
+        domain: '@yahoo.com', 
+        logo: <i className="fa-brands fa-yahoo text-[#6001d2] text-2xl"></i> 
+    },
+    { 
+        domain: '@icloud.com', 
+        logo: <i className="fa-brands fa-apple text-white text-2xl"></i> 
+    },
+];
+
 const RegistrationModal = ({ isOpen, onClose }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
+    
+    // Email State
+    const [emailMode, setEmailMode] = useState('split');
+    const [emailUser, setEmailUser] = useState('');
+    const [emailDomain, setEmailDomain] = useState('@gmail.com');
+    const [isEmailDomainOpen, setIsEmailDomainOpen] = useState(false);
+
+    // Department State
+    const [deptMode, setDeptMode] = useState('select');
+    const [selectedDept, setSelectedDept] = useState('');
+    const [customDept, setCustomDept] = useState('');
+
+    // Phone State
+    const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
+    const [isCountryOpen, setIsCountryOpen] = useState(false);
+    const [countrySearch, setCountrySearch] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    // Refs for click outside
+    const countryDropdownRef = useRef(null);
+    const emailDropdownRef = useRef(null);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') onClose();
         };
+        
+        const handleClickOutside = (e) => {
+            if (countryDropdownRef.current && !countryDropdownRef.current.contains(e.target)) {
+                setIsCountryOpen(false);
+            }
+            if (emailDropdownRef.current && !emailDropdownRef.current.contains(e.target)) {
+                setIsEmailDomainOpen(false);
+            }
+        };
+
         document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
+        document.addEventListener('mousedown', handleClickOutside);
+        
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
     }, [onClose]);
+
+    const filteredCountries = useMemo(() => {
+        return COUNTRIES.filter(c => 
+            c.name.toLowerCase().includes(countrySearch.toLowerCase()) || 
+            c.code.includes(countrySearch)
+        );
+    }, [countrySearch]);
 
     const saveToLocal = (data) => {
         const existing = JSON.parse(localStorage.getItem('maraton_registros') || '[]');
@@ -27,6 +123,16 @@ const RegistrationModal = ({ isOpen, onClose }) => {
 
         const form = e.target;
         const formData = new FormData(form);
+        
+        // Construct final data
+        const finalEmail = emailMode === 'split' ? `${emailUser}${emailDomain}` : emailUser;
+        const finalDept = deptMode === 'select' ? selectedDept : customDept;
+        const finalPhone = `${selectedCountry.code} ${phoneNumber}`;
+
+        // Update FormData with processed values
+        formData.set('email', finalEmail);
+        formData.set('department', finalDept);
+        formData.set('phone', finalPhone);
         formData.append('timestamp', new Date().toISOString());
 
         const dataObj = Object.fromEntries(formData.entries());
@@ -37,7 +143,11 @@ const RegistrationModal = ({ isOpen, onClose }) => {
         // 3. Send to Google Sheets
         if (GOOGLE_SCRIPT_URL) {
             try {
-                const params = new URLSearchParams(formData);
+                const params = new URLSearchParams();
+                for (const [key, value] of formData.entries()) {
+                    params.append(key, value);
+                }
+                
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -54,6 +164,14 @@ const RegistrationModal = ({ isOpen, onClose }) => {
         setTimeout(() => {
             setIsSubmitting(false);
             onClose();
+            // Reset Form States
+            setEmailMode('split');
+            setEmailUser('');
+            setEmailDomain('@gmail.com');
+            setDeptMode('select');
+            setSelectedDept('');
+            setCustomDept('');
+            setPhoneNumber('');
             form.reset();
 
             Swal.fire({
@@ -87,24 +205,24 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 20 }}
                         transition={{ type: "spring", duration: 0.5 }}
-                        className="w-full max-w-xl relative"
+                        className="w-full max-w-2xl relative"
                     >
-                        <div className="glass-panel rounded-3xl p-8 md:p-10 relative border border-white/10 shadow-[0_0_100px_rgba(0,240,255,0.1)]">
+                        <div className="glass-panel rounded-3xl p-8 md:p-10 relative border border-white/10 shadow-[0_0_100px_rgba(0,240,255,0.1)] max-h-[90vh] overflow-y-auto custom-scrollbar">
 
                             <button
                                 onClick={onClose}
                                 aria-label="Cerrar modal"
-                                className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors"
+                                className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors z-10"
                             >
                                 <i className="fa-solid fa-xmark text-2xl"></i>
                             </button>
 
-                            <div className="text-center mb-10">
-                                <h2 className="text-3xl font-black text-white uppercase mb-3 tracking-tight">Inscripción Oficial</h2>
-                                <p className="text-gray-400 text-sm">Reserva tu cupo GRATIS y recibe acceso inmediato a la plataforma.</p>
+                            <div className="text-center mb-8">
+                                <h2 className="text-3xl font-black text-white uppercase mb-2 tracking-tight">Inscripción Oficial</h2>
+                                <p className="text-gray-400 text-sm">Reserva tu cupo GRATIS y recibe acceso inmediato.</p>
                             </div>
 
-                            <form id="registrationForm" className="space-y-5" onSubmit={handleSubmit}>
+                            <form id="registrationForm" className="space-y-6" onSubmit={handleSubmit}>
                                 {/* Nombre */}
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase mb-2 ml-1">Nombre Completo</label>
@@ -112,44 +230,202 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                         type="text"
                                         name="fullname"
                                         required
-                                        className="w-full px-5 py-4 rounded-xl glass-input text-sm focus:ring-2 focus:ring-brand-blue/50"
+                                        className="w-full px-5 py-4 rounded-xl glass-input text-sm focus:ring-2 focus:ring-brand-blue/50 transition-all"
                                         placeholder="Ej: Juan Pérez"
                                     />
                                 </div>
 
                                 {/* Contacto Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {/* Email */}
                                     <div>
                                         <label className="block text-xs font-bold text-gray-500 uppercase mb-2 ml-1">Email</label>
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            required
-                                            className="w-full px-5 py-4 rounded-xl glass-input text-sm"
-                                            placeholder="juan@ejemplo.com"
-                                        />
+                                        {emailMode === 'split' ? (
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    value={emailUser}
+                                                    onChange={(e) => setEmailUser(e.target.value)}
+                                                    required
+                                                    className="w-[55%] px-5 py-4 rounded-xl glass-input text-sm"
+                                                    placeholder="juan"
+                                                />
+                                                <div className="relative w-[45%]" ref={emailDropdownRef}>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setIsEmailDomainOpen(!isEmailDomainOpen)}
+                                                        className="w-full px-3 py-4 rounded-xl glass-input text-sm flex items-center justify-between gap-1 hover:bg-white/10 transition-colors"
+                                                    >
+                                                        <span className="truncate">{emailDomain}</span>
+                                                        <i className="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
+                                                    </button>
+
+                                                    <AnimatePresence>
+                                                        {isEmailDomainOpen && (
+                                                            <motion.div
+                                                                initial={{ opacity: 0, y: 10 }}
+                                                                animate={{ opacity: 1, y: 0 }}
+                                                                exit={{ opacity: 0, y: 10 }}
+                                                                className="absolute top-full right-0 mt-2 w-48 bg-[#0F0F0F] border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden"
+                                                            >
+                                                                <div className="max-h-48 overflow-y-auto custom-scrollbar">
+                                                                    {EMAIL_PROVIDERS.map((provider) => (
+                                                                        <button
+                                                                            key={provider.domain}
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                setEmailDomain(provider.domain);
+                                                                                setIsEmailDomainOpen(false);
+                                                                            }}
+                                                                            className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left"
+                                                                        >
+                                                                            <span className="w-8 flex justify-center">{provider.logo}</span>
+                                                                            <span className="text-xs text-white">{provider.domain}</span>
+                                                                        </button>
+                                                                    ))}
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            setEmailMode('full');
+                                                                            setEmailUser(emailUser + (emailDomain !== '@gmail.com' ? emailDomain : ''));
+                                                                            setIsEmailDomainOpen(false);
+                                                                        }}
+                                                                        className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left border-t border-white/5"
+                                                                    >
+                                                                        <i className="fa-solid fa-pen text-gray-400 w-4 text-center"></i>
+                                                                        <span className="text-xs text-brand-gold font-bold">Otro...</span>
+                                                                    </button>
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="relative">
+                                                <input
+                                                    type="email"
+                                                    value={emailUser}
+                                                    onChange={(e) => setEmailUser(e.target.value)}
+                                                    required
+                                                    autoFocus
+                                                    className="w-full px-5 py-4 rounded-xl glass-input text-sm"
+                                                    placeholder="juan@ejemplo.com"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setEmailMode('split');
+                                                        setEmailDomain('@gmail.com');
+                                                        // Try to split if possible, otherwise clear
+                                                        const parts = emailUser.split('@');
+                                                        if (parts.length > 1) {
+                                                            setEmailUser(parts[0]);
+                                                        }
+                                                    }}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-brand-blue hover:underline"
+                                                >
+                                                    Volver
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
+
+                                    {/* WhatsApp with Country Selector */}
                                     <div>
                                         <label className="block text-xs font-bold text-gray-500 uppercase mb-2 ml-1">WhatsApp</label>
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            required
-                                            className="w-full px-5 py-4 rounded-xl glass-input text-sm"
-                                            placeholder="300 123 4567"
-                                        />
+                                        <div className="flex gap-2 relative" ref={countryDropdownRef}>
+                                            {/* Country Trigger */}
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsCountryOpen(!isCountryOpen)}
+                                                className="w-[35%] px-3 py-4 rounded-xl glass-input text-sm flex items-center justify-between gap-1 hover:bg-white/10 transition-colors"
+                                            >
+                                                <img 
+                                                    src={`https://flagcdn.com/w40/${selectedCountry.iso}.png`} 
+                                                    alt={selectedCountry.name} 
+                                                    className="w-6 h-auto rounded-sm object-cover"
+                                                />
+                                                <span className="font-mono text-gray-300 text-xs">{selectedCountry.code}</span>
+                                                <i className="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
+                                            </button>
+
+                                            {/* Phone Input */}
+                                            <input
+                                                type="tel"
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
+                                                required
+                                                className="w-[65%] px-5 py-4 rounded-xl glass-input text-sm font-mono"
+                                                placeholder="300 123 4567"
+                                            />
+
+                                            {/* Country Dropdown */}
+                                            <AnimatePresence>
+                                                {isCountryOpen && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: 10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: 10 }}
+                                                        className="absolute top-full left-0 mt-2 w-64 bg-[#0F0F0F] border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden"
+                                                    >
+                                                        {/* Search */}
+                                                        <div className="p-3 border-b border-white/5 sticky top-0 bg-[#0F0F0F] z-10">
+                                                            <div className="relative">
+                                                                <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                                                                <input
+                                                                    type="text"
+                                                                    placeholder="Buscar país..."
+                                                                    value={countrySearch}
+                                                                    onChange={(e) => setCountrySearch(e.target.value)}
+                                                                    className="w-full bg-white/5 border border-white/5 rounded-lg pl-8 pr-3 py-2 text-xs text-white focus:outline-none focus:border-brand-blue/50"
+                                                                    autoFocus
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        {/* List */}
+                                                        <div className="max-h-48 overflow-y-auto custom-scrollbar">
+                                                            {filteredCountries.map((country) => (
+                                                                <button
+                                                                    key={country.name}
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setSelectedCountry(country);
+                                                                        setIsCountryOpen(false);
+                                                                        setCountrySearch('');
+                                                                    }}
+                                                                    className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left"
+                                                                >
+                                                                    <img 
+                                                                        src={`https://flagcdn.com/w40/${country.iso}.png`} 
+                                                                        alt={country.name} 
+                                                                        className="w-6 h-auto rounded-sm object-cover"
+                                                                    />
+                                                                    <div className="flex flex-col">
+                                                                        <span className="text-xs text-white font-medium">{country.name}</span>
+                                                                        <span className="text-[10px] text-gray-500 font-mono">{country.code}</span>
+                                                                    </div>
+                                                                </button>
+                                                            ))}
+                                                            {filteredCountries.length === 0 && (
+                                                                <div className="p-4 text-center text-xs text-gray-500">No encontrado</div>
+                                                            )}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
                                     </div>
                                 </div>
 
                                 {/* Grado y Depto Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-xs font-bold text-gray-500 uppercase mb-2 ml-1">Grado Actual</label>
                                         <div className="relative">
                                             <select
                                                 name="grade"
                                                 required
-                                                aria-label="Grado Actual"
                                                 className="w-full px-5 py-4 rounded-xl glass-input text-sm appearance-none cursor-pointer"
                                             >
                                                 <option value="" className="bg-gray-900 text-gray-500">Selecciona...</option>
@@ -165,52 +441,84 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold text-gray-500 uppercase mb-2 ml-1">Departamento</label>
-                                        <div className="relative">
-                                            <select
-                                                name="department"
-                                                required
-                                                aria-label="Departamento"
-                                                className="w-full px-5 py-4 rounded-xl glass-input text-sm appearance-none cursor-pointer"
-                                            >
-                                                <option value="" className="bg-gray-900">Selecciona...</option>
-                                                <option value="Amazonas" className="bg-gray-900">Amazonas</option>
-                                                <option value="Antioquia" className="bg-gray-900">Antioquia</option>
-                                                <option value="Arauca" className="bg-gray-900">Arauca</option>
-                                                <option value="Atlántico" className="bg-gray-900">Atlántico</option>
-                                                <option value="Bolívar" className="bg-gray-900">Bolívar</option>
-                                                <option value="Boyacá" className="bg-gray-900">Boyacá</option>
-                                                <option value="Caldas" className="bg-gray-900">Caldas</option>
-                                                <option value="Caquetá" className="bg-gray-900">Caquetá</option>
-                                                <option value="Casanare" className="bg-gray-900">Casanare</option>
-                                                <option value="Cauca" className="bg-gray-900">Cauca</option>
-                                                <option value="Cesar" className="bg-gray-900">Cesar</option>
-                                                <option value="Chocó" className="bg-gray-900">Chocó</option>
-                                                <option value="Córdoba" className="bg-gray-900">Córdoba</option>
-                                                <option value="Cundinamarca" className="bg-gray-900">Cundinamarca</option>
-                                                <option value="Guainía" className="bg-gray-900">Guainía</option>
-                                                <option value="Guaviare" className="bg-gray-900">Guaviare</option>
-                                                <option value="Huila" className="bg-gray-900">Huila</option>
-                                                <option value="La Guajira" className="bg-gray-900">La Guajira</option>
-                                                <option value="Magdalena" className="bg-gray-900">Magdalena</option>
-                                                <option value="Meta" className="bg-gray-900">Meta</option>
-                                                <option value="Nariño" className="bg-gray-900">Nariño</option>
-                                                <option value="Norte de Santander" className="bg-gray-900">Norte de Santander</option>
-                                                <option value="Putumayo" className="bg-gray-900">Putumayo</option>
-                                                <option value="Quindío" className="bg-gray-900">Quindío</option>
-                                                <option value="Risaralda" className="bg-gray-900">Risaralda</option>
-                                                <option value="San Andrés y Providencia" className="bg-gray-900">San Andrés y Providencia</option>
-                                                <option value="Santander" className="bg-gray-900">Santander</option>
-                                                <option value="Sucre" className="bg-gray-900">Sucre</option>
-                                                <option value="Tolima" className="bg-gray-900">Tolima</option>
-                                                <option value="Valle del Cauca" className="bg-gray-900">Valle del Cauca</option>
-                                                <option value="Vaupés" className="bg-gray-900">Vaupés</option>
-                                                <option value="Vichada" className="bg-gray-900">Vichada</option>
-                                                <option value="Otro" className="bg-gray-900">Otro</option>
-                                            </select>
-                                            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
-                                                <i className="fa-solid fa-chevron-down text-xs"></i>
+                                        {deptMode === 'select' ? (
+                                            <div className="relative">
+                                                <select
+                                                    value={selectedDept}
+                                                    onChange={(e) => {
+                                                        if (e.target.value === 'Otro') {
+                                                            setDeptMode('input');
+                                                        } else {
+                                                            setSelectedDept(e.target.value);
+                                                        }
+                                                    }}
+                                                    required
+                                                    className="w-full px-5 py-4 rounded-xl glass-input text-sm appearance-none cursor-pointer"
+                                                >
+                                                    <option value="" className="bg-gray-900">Selecciona...</option>
+                                                    <option value="Amazonas" className="bg-gray-900">Amazonas</option>
+                                                    <option value="Antioquia" className="bg-gray-900">Antioquia</option>
+                                                    <option value="Arauca" className="bg-gray-900">Arauca</option>
+                                                    <option value="Atlántico" className="bg-gray-900">Atlántico</option>
+                                                    <option value="Bogotá D.C." className="bg-gray-900">Bogotá D.C.</option>
+                                                    <option value="Bolívar" className="bg-gray-900">Bolívar</option>
+                                                    <option value="Boyacá" className="bg-gray-900">Boyacá</option>
+                                                    <option value="Caldas" className="bg-gray-900">Caldas</option>
+                                                    <option value="Caquetá" className="bg-gray-900">Caquetá</option>
+                                                    <option value="Casanare" className="bg-gray-900">Casanare</option>
+                                                    <option value="Cauca" className="bg-gray-900">Cauca</option>
+                                                    <option value="Cesar" className="bg-gray-900">Cesar</option>
+                                                    <option value="Chocó" className="bg-gray-900">Chocó</option>
+                                                    <option value="Córdoba" className="bg-gray-900">Córdoba</option>
+                                                    <option value="Cundinamarca" className="bg-gray-900">Cundinamarca</option>
+                                                    <option value="Guainía" className="bg-gray-900">Guainía</option>
+                                                    <option value="Guaviare" className="bg-gray-900">Guaviare</option>
+                                                    <option value="Huila" className="bg-gray-900">Huila</option>
+                                                    <option value="La Guajira" className="bg-gray-900">La Guajira</option>
+                                                    <option value="Magdalena" className="bg-gray-900">Magdalena</option>
+                                                    <option value="Meta" className="bg-gray-900">Meta</option>
+                                                    <option value="Nariño" className="bg-gray-900">Nariño</option>
+                                                    <option value="Norte de Santander" className="bg-gray-900">Norte de Santander</option>
+                                                    <option value="Putumayo" className="bg-gray-900">Putumayo</option>
+                                                    <option value="Quindío" className="bg-gray-900">Quindío</option>
+                                                    <option value="Risaralda" className="bg-gray-900">Risaralda</option>
+                                                    <option value="San Andrés" className="bg-gray-900">San Andrés</option>
+                                                    <option value="Santander" className="bg-gray-900">Santander</option>
+                                                    <option value="Sucre" className="bg-gray-900">Sucre</option>
+                                                    <option value="Tolima" className="bg-gray-900">Tolima</option>
+                                                    <option value="Valle del Cauca" className="bg-gray-900">Valle del Cauca</option>
+                                                    <option value="Vaupés" className="bg-gray-900">Vaupés</option>
+                                                    <option value="Vichada" className="bg-gray-900">Vichada</option>
+                                                    <option value="Otro" className="bg-gray-900 font-bold text-brand-gold">Otro (Escribir manual)</option>
+                                                </select>
+                                                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                                                    <i className="fa-solid fa-chevron-down text-xs"></i>
+                                                </div>
                                             </div>
-                                        </div>
+                                        ) : (
+                                            <div className="relative">
+                                                <input
+                                                    type="text"
+                                                    value={customDept}
+                                                    onChange={(e) => setCustomDept(e.target.value)}
+                                                    required
+                                                    autoFocus
+                                                    className="w-full px-5 py-4 rounded-xl glass-input text-sm"
+                                                    placeholder="Escribe tu departamento/estado..."
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setDeptMode('select');
+                                                        setSelectedDept('');
+                                                        setCustomDept('');
+                                                    }}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-brand-blue hover:underline"
+                                                >
+                                                    Volver
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 

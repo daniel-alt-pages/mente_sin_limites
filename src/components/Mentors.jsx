@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Mentors = () => {
     return (
-        <section className="py-20 sm:py-32 relative overflow-hidden">
+        <section id="mentors" className="py-20 sm:py-32 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 sm:gap-20 items-center min-h-[80vh]">
 
                 {/* Left Column: Image & Cards */}
