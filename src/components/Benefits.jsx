@@ -40,7 +40,7 @@ const Benefits = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 uppercase tracking-tight">
-                        Tecnología <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-600">Educativa</span>
+                        Beneficios del<span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-600">Grupo de estudio</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto">
                         Hemos diseñado una experiencia de aprendizaje inmersiva que combina la mejor tecnología con la metodología más efectiva.
