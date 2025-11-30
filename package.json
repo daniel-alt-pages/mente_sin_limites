@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:gh": "vite build --base=/mente_sin_limites/",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build:gh && gh-pages -d dist"
   },
   "dependencies": {
     "framer-motion": "^12.23.24",

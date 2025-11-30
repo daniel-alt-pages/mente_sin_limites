@@ -23,7 +23,7 @@ const Hero = ({ openModal }) => {
             >
                 <div className="absolute inset-0 bg-brand-blue/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse-slow"></div>
                 <img
-                    src="/images/mente_sin_limites.svg"
+                    src="images/mente_sin_limites.svg"
                     alt="Mente Sin Límites Logo"
                     className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full bg-black/20 backdrop-blur-sm p-1 object-contain group-hover:scale-105 transition-transform duration-500"
                 />

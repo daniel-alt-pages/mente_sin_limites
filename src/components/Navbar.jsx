@@ -7,7 +7,7 @@ const Navbar = ({ openModal }) => {
                 <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
                     <div className="flex items-center gap-4">
                         <img
-                            src="/images/mente_sin_limites.svg"
+                            src="images/mente_sin_limites.svg"
                             alt="Logo"
                             className="h-8 w-auto object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]"
                         />
