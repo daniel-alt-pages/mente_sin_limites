@@ -28,6 +28,7 @@ const EMAIL_PROVIDERS = [
 
 const RegistrationModal = ({ isOpen, onClose }) => {
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyk-vZybr60khZ_NnLPnbScPm2KxcgPcNWNxhMirdSn81GSNEYErZIsDrK_FtZv4j-gvw/exec';
+    const GOOGLE_SCRIPT_INVITATIONS_URL = 'https://script.google.com/macros/s/AKfycbzAFX1kE3bbBT-8FV8JHB-MBDOae9t6mhGlY0VSXlVEkmBw9RwwbYWp3ndY_sxB2G1T/exec';
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -137,13 +138,43 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                     params.append(key, value);
                 }
 
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                // Request 1: Main Registration Sheet
+                const requestMain = fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: params.toString()
                 });
 
-                const result = await response.json();
+                // Request 2: Invitations Sheet (Email only)
+                const paramsInvitations = new URLSearchParams();
+                paramsInvitations.append('email', finalEmail);
+
+                const requestInvitations = fetch(GOOGLE_SCRIPT_INVITATIONS_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: paramsInvitations.toString()
+                });
+
+                // Wait for Main Request (Invitations can fail silently or async)
+                const [responseMain, responseInvitations] = await Promise.all([
+                    requestMain,
+                    requestInvitations.catch(err => {
+                        console.error("Invitations Network Error:", err);
+                        return null;
+                    })
+                ]);
+
+                // Log Invitations Response
+                if (responseInvitations) {
+                    try {
+                        const resultInv = await responseInvitations.clone().json();
+                        console.log('Respuesta Invitaciones:', resultInv);
+                    } catch (e) {
+                        console.log('Respuesta Invitaciones (Raw):', responseInvitations);
+                    }
+                }
+
+                const result = await responseMain.json();
                 console.log('Respuesta Sheets:', result);
 
                 if (result.result === 'error' && (result.message === 'duplicate_email' || result.message.includes('duplicate'))) {
@@ -206,6 +237,8 @@ const RegistrationModal = ({ isOpen, onClose }) => {
             }
         }
     };
+
+    if (!isOpen) return null;
 
     return (
         <AnimatePresence>
