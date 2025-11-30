@@ -37,7 +37,7 @@ const Mentors = () => {
                                 </div>
                             </div>
                             <ul className="text-gray-300 text-xs space-y-2 font-medium">
-                                <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-0.5"></i> <span>477 en primer intento</span></li>
+                                <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-0.5"></i> <span>477/500 en primer intento</span></li>
                                 <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-0.5"></i> <span>100/100 en Sociales (2 veces)</span></li>
                                 <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-blue mt-0.5"></i> <span>Certificado en IA con Helppeople</span></li>
                             </ul>
@@ -53,7 +53,7 @@ const Mentors = () => {
                                 </div>
                             </div>
                             <ul className="text-gray-300 text-xs space-y-2 font-medium">
-                                <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-0.5"></i> <span>Mejor ICFES 2025 Jamundí</span></li>
+                                <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-0.5"></i> <span>Mejor ICFES 2025, en todo Jamundí</span></li>
                                 <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-0.5"></i> <span>100/100 en Sociales e Inglés</span></li>
                                 <li className="flex items-start gap-2"><i className="fa-solid fa-check text-brand-gold mt-0.5"></i> <span>Certificado en IA Helppeople</span></li>
                             </ul>
@@ -85,7 +85,7 @@ const Mentors = () => {
                         className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-8 leading-[1.1] drop-shadow-2xl"
                     >
                         MENTORES DE <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 filter drop-shadow-[0_0_20px_rgba(0,240,255,0.4)]">ÉLITE</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 filter drop-shadow-[0_0_20px_rgba(0,240,255,0.4)]">Mente Sin Limítes</span>
                     </motion.h2>
 
                     <motion.p
@@ -94,7 +94,7 @@ const Mentors = () => {
                         transition={{ delay: 0.3 }}
                         className="text-white text-lg mb-10 leading-relaxed font-medium drop-shadow-md bg-black/20 p-4 rounded-xl border border-white/5 backdrop-blur-sm"
                     >
-                        No somos profesores tradicionales. Somos jóvenes profesionales que descifraron el examen y obtuvieron los mejores puntajes del país. Te enseñaremos exactamente cómo lo hicimos.
+                        No somos profesores tradicionales. Somos jóvenes que descifraron el examen y obtuvieron los mejores puntajes del país. Te enseñaremos exactamente cómo lo hicimos.
                     </motion.p>
 
                     <div className="space-y-4 mb-10">
