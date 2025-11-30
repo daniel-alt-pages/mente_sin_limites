@@ -170,35 +170,48 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                     setIsSubmitting(false);
                     return;
                 }
+
+                if (result.result === 'success') {
+                    // 4. Success Feedback (Only if explicit success)
+                    setTimeout(() => {
+                        setIsSubmitting(false);
+                        onClose();
+                        // Reset Form States
+                        setEmailMode('split');
+                        setEmailUser('');
+                        setEmailDomain('@gmail.com');
+                        setDeptMode('select');
+                        setSelectedDept('');
+                        setCustomDept('');
+                        setPhoneNumber('');
+                        form.reset();
+
+                        Swal.fire({
+                            title: '¡BIENVENIDO!',
+                            text: 'Tu registro ha sido exitoso. Prepárate para romperla.',
+                            icon: 'success',
+                            background: '#0A0A0A',
+                            color: '#fff',
+                            confirmButtonColor: '#00F0FF',
+                            confirmButtonText: '¡VAMOS!'
+                        });
+                    }, 1000);
+                } else {
+                    throw new Error('Respuesta desconocida del servidor');
+                }
+
             } catch (error) {
                 console.error('Error enviando a Sheets:', error);
+                setIsSubmitting(false);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Hubo un problema al conectar con el servidor. Inténtalo de nuevo.',
+                    icon: 'error',
+                    background: '#0A0A0A',
+                    color: '#fff'
+                });
             }
         }
-
-        // 4. Success Feedback
-        setTimeout(() => {
-            setIsSubmitting(false);
-            onClose();
-            // Reset Form States
-            setEmailMode('split');
-            setEmailUser('');
-            setEmailDomain('@gmail.com');
-            setDeptMode('select');
-            setSelectedDept('');
-            setCustomDept('');
-            setPhoneNumber('');
-            form.reset();
-
-            Swal.fire({
-                title: '¡BIENVENIDO!',
-                text: 'Tu registro ha sido exitoso. Prepárate para romperla.',
-                icon: 'success',
-                background: '#0A0A0A',
-                color: '#fff',
-                confirmButtonColor: '#00F0FF',
-                confirmButtonText: '¡VAMOS!'
-            });
-        }, 1000);
     };
 
     return (
