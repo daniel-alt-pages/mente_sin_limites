@@ -99,7 +99,7 @@ const Mentors = () => {
 
                     <div className="space-y-4 mb-10">
                         {[
-                            { title: "Clases en vivo con interacción real", desc: "Pregunta y participa en tiempo real. Nada de clases grabadas aburridas." },
+                            { title: "Clases en vivo con interacciones reales", desc: "Pregunta y participa en tiempo real. Nada de clases grabadas aburridas." },
                             { title: "Resolución de dudas 24/7", desc: "Acceso directo a nosotros por WhatsApp para resolver cualquier inquietud." },
                             { title: "Hackeo del Examen", desc: "Estrategias específicas para descartar opciones y responder rápido." },
                             { title: "Comunidad de Estudiantes", desc: "Grupo de estudio activo con otros estudiantes enfocados en el mismo objetivo." },
