@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqZBX8qEm42reUEjvl77pJQCfY4TO-YOhla6sHcAreCJ4IdFIfKJaEmFm-S1g8ORVcfA/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyk-vZybr60khZ_NnLPnbScPm2KxcgPcNWNxhMirdSn81GSNEYErZIsDrK_FtZv4j-gvw/exec';
 
 const COUNTRIES = [
     { name: "Colombia", code: "+57", iso: "co" },
@@ -27,8 +27,8 @@ const COUNTRIES = [
 ];
 
 const EMAIL_PROVIDERS = [
-    { 
-        domain: '@gmail.com', 
+    {
+        domain: '@gmail.com',
         logo: (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-8 h-8">
                 <path fill="#4caf50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"></path>
@@ -39,27 +39,27 @@ const EMAIL_PROVIDERS = [
             </svg>
         )
     },
-    { 
-        domain: '@hotmail.com', 
-        logo: <i className="fa-brands fa-microsoft text-[#00a4ef] text-2xl"></i> 
+    {
+        domain: '@hotmail.com',
+        logo: <i className="fa-brands fa-microsoft text-[#00a4ef] text-2xl"></i>
     },
-    { 
-        domain: '@outlook.com', 
-        logo: <i className="fa-brands fa-microsoft text-[#0078d4] text-2xl"></i> 
+    {
+        domain: '@outlook.com',
+        logo: <i className="fa-brands fa-microsoft text-[#0078d4] text-2xl"></i>
     },
-    { 
-        domain: '@yahoo.com', 
-        logo: <i className="fa-brands fa-yahoo text-[#6001d2] text-2xl"></i> 
+    {
+        domain: '@yahoo.com',
+        logo: <i className="fa-brands fa-yahoo text-[#6001d2] text-2xl"></i>
     },
-    { 
-        domain: '@icloud.com', 
-        logo: <i className="fa-brands fa-apple text-white text-2xl"></i> 
+    {
+        domain: '@icloud.com',
+        logo: <i className="fa-brands fa-apple text-white text-2xl"></i>
     },
 ];
 
 const RegistrationModal = ({ isOpen, onClose }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
+
     // Email State
     const [emailMode, setEmailMode] = useState('split');
     const [emailUser, setEmailUser] = useState('');
@@ -85,7 +85,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') onClose();
         };
-        
+
         const handleClickOutside = (e) => {
             if (countryDropdownRef.current && !countryDropdownRef.current.contains(e.target)) {
                 setIsCountryOpen(false);
@@ -97,7 +97,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
 
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('mousedown', handleClickOutside);
-        
+
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('mousedown', handleClickOutside);
@@ -105,8 +105,8 @@ const RegistrationModal = ({ isOpen, onClose }) => {
     }, [onClose]);
 
     const filteredCountries = useMemo(() => {
-        return COUNTRIES.filter(c => 
-            c.name.toLowerCase().includes(countrySearch.toLowerCase()) || 
+        return COUNTRIES.filter(c =>
+            c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
             c.code.includes(countrySearch)
         );
     }, [countrySearch]);
@@ -123,7 +123,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
 
         const form = e.target;
         const formData = new FormData(form);
-        
+
         // Construct final data
         const finalEmail = emailMode === 'split' ? `${emailUser}${emailDomain}` : emailUser;
         const finalDept = deptMode === 'select' ? selectedDept : customDept;
@@ -147,7 +147,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                 for (const [key, value] of formData.entries()) {
                     params.append(key, value);
                 }
-                
+
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -232,6 +232,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                         required
                                         className="w-full px-5 py-4 rounded-xl glass-input text-sm focus:ring-2 focus:ring-brand-blue/50 transition-all"
                                         placeholder="Ej: Juan Pérez"
+                                        onInput={(e) => e.target.value = e.target.value.toUpperCase()}
                                     />
                                 </div>
 
@@ -245,7 +246,23 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                                 <input
                                                     type="text"
                                                     value={emailUser}
-                                                    onChange={(e) => setEmailUser(e.target.value)}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        if (val.includes('@')) {
+                                                            const [user, domain] = val.split('@');
+                                                            const matchingProvider = EMAIL_PROVIDERS.find(p => p.domain === '@' + domain);
+
+                                                            if (matchingProvider) {
+                                                                setEmailUser(user);
+                                                                setEmailDomain(matchingProvider.domain);
+                                                            } else {
+                                                                setEmailMode('full');
+                                                                setEmailUser(val);
+                                                            }
+                                                        } else {
+                                                            setEmailUser(val);
+                                                        }
+                                                    }}
                                                     required
                                                     className="w-[55%] px-5 py-4 rounded-xl glass-input text-sm"
                                                     placeholder="juan"
@@ -341,9 +358,9 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                                 onClick={() => setIsCountryOpen(!isCountryOpen)}
                                                 className="w-[35%] px-3 py-4 rounded-xl glass-input text-sm flex items-center justify-between gap-1 hover:bg-white/10 transition-colors"
                                             >
-                                                <img 
-                                                    src={`https://flagcdn.com/w40/${selectedCountry.iso}.png`} 
-                                                    alt={selectedCountry.name} 
+                                                <img
+                                                    src={`https://flagcdn.com/w40/${selectedCountry.iso}.png`}
+                                                    alt={selectedCountry.name}
                                                     className="w-6 h-auto rounded-sm object-cover"
                                                 />
                                                 <span className="font-mono text-gray-300 text-xs">{selectedCountry.code}</span>
@@ -396,9 +413,9 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                                                                     }}
                                                                     className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left"
                                                                 >
-                                                                    <img 
-                                                                        src={`https://flagcdn.com/w40/${country.iso}.png`} 
-                                                                        alt={country.name} 
+                                                                    <img
+                                                                        src={`https://flagcdn.com/w40/${country.iso}.png`}
+                                                                        alt={country.name}
                                                                         className="w-6 h-auto rounded-sm object-cover"
                                                                     />
                                                                     <div className="flex flex-col">
