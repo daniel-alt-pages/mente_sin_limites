@@ -127,7 +127,7 @@ const Hero = ({ openModal }) => {
                     <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">6:00 PM - 9:00 PM</p>
                 </div>
                 <div className="text-center md:text-left md:border-l border-white/5 md:pl-8">
-                    <h4 className="text-2xl sm:text-3xl font-black text-brand-gold mb-1">3 HORAS</h4>
+                    <h4 className="text-2xl sm:text-3xl font-black text-brand-gold mb-1">3 HRS</h4>
                     <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest">Clases en Vivo</p>
                 </div>
                 <div className="text-center md:text-left md:border-l border-white/5 md:pl-8">
