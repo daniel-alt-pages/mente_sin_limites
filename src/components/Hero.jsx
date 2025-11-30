@@ -52,7 +52,7 @@ const Hero = ({ openModal }) => {
                 className="mb-4 sm:mb-8 flex flex-col items-center gap-2"
             >
                 <p className="text-gray-400 text-sm sm:text-base uppercase tracking-widest font-bold">
-                    Organizado por <span className="text-white">SeamosGenios</span> y su grupo de estudio <span className="text-white">Mente Sin Límites</span>
+                    Organizado por <span className="text-white">SeamosGenios</span> y su grupo de estudio</span>
                 </p>
                 <a
                     href="https://whatsapp.com/channel/0029Vb0XtNA0rGiOZmEutE2x"
@@ -60,7 +60,7 @@ const Hero = ({ openModal }) => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-brand-blue hover:text-white transition-colors font-bold border-b border-brand-blue/30 hover:border-brand-blue pb-0.5"
                 >
-                    <i className="fa-brands fa-whatsapp"></i> Mente Sin Límites
+                    <i className="fa-brands fa-whatsapp"></i> MENTE SIN LÍMITES 
                 </a>
             </motion.div>
 
@@ -71,7 +71,7 @@ const Hero = ({ openModal }) => {
                 className="text-base sm:text-lg md:text-xl text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-10 px-2"
             >
                 La preparación definitiva para el ICFES Saber 11°.
-                <span className="text-white block sm:inline"> Estrategia neuroeducativa, simulacros reales y resultados garantizados.</span>
+                <span className="text-white block sm:inline"> Cambiamos la rivalidad por colaboración. Únete a la revolución educativa gratuita donde tu origen no importa, y descubre que la excelencia académica está al alcance de quienes se ayudan mutuamente.</span>
             </motion.p>
 
             {/* CTA Buttons */}
